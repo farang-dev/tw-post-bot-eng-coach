@@ -19,19 +19,10 @@ client = tweepy.Client(
 )
 
 # Define each type of prompt for the content
-def get_learning_advice():
-    prompt = """
-    あなたは日本人の英語学習者をサポートする英語コーチです。初心者から上級者まで、英語の実用的な学習法を、日本語でツイートしてください。内容の難易度はランダムに設定されるようにしてください。丁寧で親切、日本人のような自然なトーンでツイートしてください。内容は280文字以内に収めてください。
-    """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "system", "content": prompt}]
-    )
-    return response['choices'][0]['message']['content'].strip()
 
 def get_grammar_explanation():
     prompt = """
-    あなたは日本人向けの英語教師です。初心者から上級者までの学習者に合わせて、よく使われる英語の文法ルールを日本語でわかりやすく説明し、簡単な例文を付け加えたツイートを作成してください。丁寧で親切、日本人のような自然なトーンでツイートしてください。内容のレベルはランダムにし、280文字以内に収めてください。
+    あなたは日本人向けの英語教師です。初心者から最上級者までの学習者に合わせて、特定の英語の文法ルールを日本語でわかりやすく説明し、簡単な例文を付け加えたツイートを作成してください。丁寧語で、日本人のような自然なトーンでツイートしてください。内容のレベルは毎回必ずランダム(高校生レベル以上 - 最上級者）にし、最後にシェア、インプレッションが最も発生するようなハッシュタグをつけて、280文字以内に収めてください。
     """
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -41,7 +32,7 @@ def get_grammar_explanation():
 
 def get_vocab_list_with_examples():
     prompt = """
-    あなたは日本人の英語学習者をサポートする英語教師です。初心者〜上級者のレベル別で、特定のテーマに基づいた英単語リストを日本語で作成し、例文と共にツイートしてください。丁寧で親切、日本人のような自然なトーンでツイートしてください。リストは7～10語程度で、テーマや難易度をランダムにして280文字以内に収めてください。
+    あなたは日本人の英語学習者をサポートする英語教師です。初心者〜上級者のレベル別で、特定のテーマに基づいた英単語リストを日本語で作成し、例文と共にツイートしてください。丁寧語で、日本人のような自然なトーンでツイートしてください。リストは7～10語程度で、テーマ（身近なもののテーマや、アカデミックまで）や難易度を毎回必ずランダム(初心者のものも良いし、たまに最上級者にしても良い）にして、最後にシェア、インプレッションが最も発生するようなハッシュタグをつけて、280文字以内に収めてください。
     """
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -51,7 +42,7 @@ def get_vocab_list_with_examples():
 
 def get_test_preparation_tips():
     prompt = """
-    あなたは日本人の英語試験対策コーチです。TOEFL、TOEIC、IELTSのいずれかの試験に関する具体的な攻略法やスコアアップのコツを日本語でツイートしてください。丁寧で親切、日本人のような自然なトーンでツイートしてください。短期間で効果が出る勉強法や具体的なアドバイスを280文字以内で提供してください。
+    あなたは日本人の英語試験対策コーチです。TOEFL、TOEIC、IELTSのいずれかの試験に関する具体的な攻略法やスコアアップのコツを日本語でツイートしてください。丁寧語で、日本人のような自然なトーンでツイートしてください。毎回の内容を必ずランダムに変えてください(初心者から最上級者まで）。そして、最後にシェア、インプレッションが最も発生するようなハッシュタグをつけて。具体的なアドバイスを280文字以内で提供してください。
     """
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -61,7 +52,6 @@ def get_test_preparation_tips():
 
 # List of content generation functions
 content_generators = [
-    get_learning_advice,
     get_grammar_explanation,
     get_vocab_list_with_examples,
     get_test_preparation_tips
