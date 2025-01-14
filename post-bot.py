@@ -47,9 +47,15 @@ def get_vocab_list_with_examples():
     )
     return response['choices'][0]['message']['content'].strip()
 
-def get_test_preparation_tips():
+def get_useful_phrases():
     prompt = """
-    あなたは日本人の英語試験対策コーチです。TOEFL、TOEIC、IELTSのいずれかの試験に関する具体的な攻略法やスコアアップのコツを日本語でツイートしてください(試験内容を踏まえて必ず具体的な内容で）。あまりに当たり前な内容は必要ありません。具体的かつきちんと役に立つ内容で。丁寧語で、日本人のような自然なトーンでツイートしてください。毎回の内容を必ずランダムに変えてください(初心者から最上級者まで）。そして、最後にシェア、インプレッションが最も発生するようなハッシュタグをつけて。具体的なアドバイスを280文字以内で提供してください。
+  英語を学びたい中級者～超上級者向けに、簡単で実用的なフレーズを紹介するTwitter投稿を作成してください。
+条件:
+投稿は1ツイートで140文字以内に収めること。
+フレーズは3～5個の具体的な例を挙げ、短い日本語の説明をつけること。
+「忙しいとき」「予定を断るとき」など、シーンを明確にする。
+読者にアクションを促す一文を最後につける（例:「気に入ったらフォローしてね！」）。
+カジュアルで親しみやすいトーンで書くこと。
     """
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -61,7 +67,7 @@ def get_test_preparation_tips():
 content_generators = [
     get_grammar_explanation,
     get_vocab_list_with_examples,
-    get_test_preparation_tips
+    get_useful_phrases
 ]
 
 def tweet_content():
