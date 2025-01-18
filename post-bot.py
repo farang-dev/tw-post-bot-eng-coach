@@ -18,42 +18,7 @@ client = tweepy.Client(
     access_token_secret=os.getenv("ACCESS_TOKEN_SECRET")
 )
 
-# Define each type of prompt for the content
-
-def get_better_phrases():
-    prompt = """
-「[シチュエーション]に役立つ英語フレーズを紹介し、最も基本的な表現と、より自然な言い回しを提供してください。さらに、そのフレーズを日常会話で使うことで、よりフレンドリーや自信を持って話せる点を強調します。絵文字は使用せず、シンプルで明確な言葉を使用してください。」
-
-例1:
-シチュエーション: "遅刻したとき"
-
-「英語で『遅れてすみません』はどう言う？
-基本的な表現→「I’m sorry I’m late」
-でも、もっとカジュアルで自然に言いたいなら→
-「Sorry I kept you waiting」
-会話の中でこのフレーズを使うことで、より親しみやすく聞こえるよ！」
-例2:
-シチュエーション: "会議をキャンセルしたいとき"
-
-「英語で『会議をキャンセルしたい』はどう言う？
-基本的な表現→「I need to cancel the meeting」
-でも、もっと柔らかく伝えたいなら→
-「Would it be possible to reschedule the meeting?」
-この言い回しを使うと、相手に対して配慮を示しながら伝えることができる！」
-例3:
-シチュエーション: "感謝の気持ちを伝えたいとき"
-
-「英語で『ありがとう』はどう言う？
-基本的な表現→「Thank you」
-でも、感謝の気持ちをもっと強調したいなら→
-「I really appreciate it」
-より深い感謝を伝えたいときにぴったりなフレーズ！」
-    """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "system", "content": prompt}]
-    )
-    return response['choices'][0]['message']['content'].strip()
+# Define eagch type of prompt for the content
 
 def get_vocab_list_with_examples():
     prompt = """
@@ -72,27 +37,10 @@ def get_vocab_list_with_examples():
     )
     return response['choices'][0]['message']['content'].strip()
 
-def get_useful_phrases():
-    prompt = """
-  英語を学びたい中級者～超上級者向けに、簡単で実用的なフレーズを紹介するTwitter投稿を作成してください。
-条件:
-投稿は1ツイートで140文字以内に収めること。
-フレーズは3～5個の具体的な例を挙げ、短い日本語の説明をつけること。
-「忙しいとき」「予定を断るとき」など、シーンを明確にする。
-読者にアクションを促す一文を最後につける。
-丁寧な（丁寧語で）トーンで書くこと。
-    """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        messages=[{"role": "system", "content": prompt}]
-    )
-    return response['choices'][0]['message']['content'].strip()
 
 # List of content generation functions
 content_generators = [
-    get_better_phrases,
-    get_vocab_list_with_examples,
-    get_useful_phrases
+    get_vocab_list_with_examples
 ]
 
 def tweet_content():
