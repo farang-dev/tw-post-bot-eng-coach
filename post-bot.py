@@ -37,10 +37,37 @@ def get_vocab_list_with_examples():
     )
     return response['choices'][0]['message']['content'].strip()
 
+def get_idiom_list():
+    prompt = """
+あなたは日本人の英語学習者をサポートする英語教師です。大学院生以上のレベルを対象に、前置詞や動詞ごとにカテゴライズされたイディオムリストを日本語で作成し、丁寧語で、日本人のような自然なトーンでツイートしてください。リストは10～15語程度とし、以下のフォーマットに従ってください。
+タイトル（例: 前置詞 "on" を使ったイディオムリスト）
+イディオムとその意味を簡潔にリスト形式で記載
+シェアやインプレッションを増やすためのハッシュタグを追加
+ツイートは280文字以内に収め、余分な説明文は省いてください。
+
+例:
+前置詞 "on" を使ったイディオムリスト:
+on the ball - 機敏な
+on the fence - 迷っている
+on the rocks - 危機的な
+on the fly - 即興で
+on the house - 無料で
+on the go - 忙しく動き回って
+on the verge - まさに～しそう
+
+#英語学習 #イディオム #上級者向け
+    """
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role": "system", "content": prompt}]
+    )
+    return response['choices'][0]['message']['content'].strip()
+
 
 # List of content generation functions
 content_generators = [
-    get_vocab_list_with_examples
+    get_vocab_list_with_examples,
+    get_idiom_list
 ]
 
 def tweet_content():
